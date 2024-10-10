@@ -11,7 +11,7 @@ builder.Services.AddDbContext<WalletDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"));
 });
-
+builder.Services.ConfigureValidator();
 builder.Services.AddCarter();
 builder.Services.AddServiceDiscovery();
 
