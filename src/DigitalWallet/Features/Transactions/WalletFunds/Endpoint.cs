@@ -1,7 +1,4 @@
-﻿using Carter;
-using DigitalWallet.Common.Extensions;
-
-namespace DigitalWallet.Features.Transactions.WalletFunds;
+﻿namespace DigitalWallet.Features.Transactions.WalletFunds;
 
 public class Endpoint : ICarterModule
 {

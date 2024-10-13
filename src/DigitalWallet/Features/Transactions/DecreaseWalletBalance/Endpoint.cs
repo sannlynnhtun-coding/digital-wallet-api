@@ -1,7 +1,4 @@
-﻿using Carter;
-using DigitalWallet.Common.Extensions;
-
-namespace DigitalWallet.Features.Transactions.DecreaseWalletBalance;
+﻿namespace DigitalWallet.Features.Transactions.DecreaseWalletBalance;
 
 
 public class Endpoint : ICarterModule

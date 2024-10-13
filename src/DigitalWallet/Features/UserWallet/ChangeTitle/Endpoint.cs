@@ -1,7 +1,4 @@
-﻿using Carter;
-using DigitalWallet.Common.Extensions;
-
-namespace DigitalWallet.Features.UserWallet.ChangeTitle;
+﻿namespace DigitalWallet.Features.UserWallet.ChangeTitle;
 
 public class Endpoint : ICarterModule
 {

@@ -1,7 +1,3 @@
-using Carter;
-using DigitalWallet.Common.Extensions;
-using ServiceCollector.Core;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();

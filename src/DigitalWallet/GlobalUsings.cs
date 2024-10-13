@@ -28,3 +28,6 @@ global using DigitalWallet.Features.UserWallet.GetTransactions;
 global using DigitalWallet.Features.Transactions.Common;
 global using DigitalWallet.Features.MultiCurrency.GetAll;
 global using DigitalWallet.Features.UserWallet.Active;
+global using Carter;
+global using DigitalWallet.Common;
+global using ServiceCollector.Core;

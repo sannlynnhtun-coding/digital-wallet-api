@@ -1,7 +1,4 @@
-﻿using Carter;
-using DigitalWallet.Common.Extensions;
-
-namespace DigitalWallet.Features.MultiCurrency.UpdateRatio;
+﻿namespace DigitalWallet.Features.MultiCurrency.UpdateRatio;
 
 public class Endpoint : ICarterModule
 {

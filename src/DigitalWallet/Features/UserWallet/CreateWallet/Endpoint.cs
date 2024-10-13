@@ -1,7 +1,4 @@
-﻿using Carter;
-using DigitalWallet.Common.Extensions;
-
-namespace DigitalWallet.Features.UserWallet.CreateWallet;
+﻿namespace DigitalWallet.Features.UserWallet.CreateWallet;
 
 public class Endpoint : ICarterModule
 {
