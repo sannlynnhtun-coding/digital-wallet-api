@@ -100,22 +100,39 @@ app.MapPost("/transactions", async (Transaction transaction, WalletService walle
     }
 });
 
-app.MapPost("/transactions", async (Transaction transaction, TransactionService transactionService, HttpContext context) =>
+app.MapGet("/wallets/{walletId}/transactions", async (Guid walletId, int page, WalletDbContext db, HttpContext context) =>
 {
     var auth = context.RequestServices.GetRequiredService<CustomAuthorizeAttribute>();
     if (!await auth.AuthorizeAsync(context))
         return Results.Unauthorized();
 
+    // Get the user ID from the context
     var userId = auth.GetUserIdFromContext(context);
-    try
-    {
-        var transactions = await transactionService.ProcessTransactionAsync(transaction, userId.Value);
-        return Results.Created($"/transactions/{transactions[0].Id}", transactions);
-    }
-    catch (ArgumentException ex)
-    {
-        return Results.BadRequest(ex.Message);
-    }
+    if (userId == null)
+        return Results.Unauthorized();
+
+    // Fetch the wallet to ensure ownership
+    var wallet = await db.Wallets.FindAsync(walletId);
+    if (wallet == null || wallet.UserId != userId)
+        return Results.BadRequest("Invalid account number");
+
+    // Pagination
+    const int pageSize = 20;
+    var transactions = await db.Transactions
+        .Where(t => t.FromWalletId == walletId || t.ToWalletId == walletId)
+        .OrderByDescending(t => t.CreatedAt) // Most recent first
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .Select(t => new
+        {
+            t.Id,
+            Amount = t.FromWalletId == walletId ? -t.Amount : t.Amount, // Debit as negative, credit as positive
+            t.CreatedAt,
+            t.TransactionType
+        })
+        .ToListAsync();
+
+    return Results.Ok(transactions);
 });
 
 // Token Generation Method
