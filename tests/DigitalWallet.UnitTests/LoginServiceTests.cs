@@ -1,8 +1,10 @@
 ﻿using DigitalWallet.Database.WalletDbContextModels;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using Moq.EntityFrameworkCore;
 using System;
-using System.Linq.Expressions;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -24,10 +26,10 @@ namespace DigitalWallet.UnitTests
         {
             // Arrange
             var request = new LoginRequest { Username = "user1", Password = "admin" };
-            var user = new User { Id = Guid.NewGuid(), Username = "user1", PasswordHash = "admin" };
+            var user = new User { Id = Guid.NewGuid(), Username = "user1", PasswordHash = "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=" };
 
-            _dbContextMock.Setup(db => db.Users.FirstOrDefaultAsync(It.IsAny<Expression<Func<User, bool>>>(), default))
-                .ReturnsAsync(user);
+            var users = new List<User> { user }.AsQueryable();
+            _dbContextMock.Setup(db => db.Users).ReturnsDbSet(users);
 
             // Act
             var token = await _loginService.LoginAsync(request);
@@ -42,8 +44,8 @@ namespace DigitalWallet.UnitTests
             // Arrange
             var request = new LoginRequest { Username = "invalidUser", Password = "wrongPassword" };
 
-            _dbContextMock.Setup(db => db.Users.FirstOrDefaultAsync(It.IsAny<Expression<Func<User, bool>>>(), default))
-                .ReturnsAsync((User)null);
+            var users = new List<User>().AsQueryable(); // No users
+            _dbContextMock.Setup(db => db.Users).ReturnsDbSet(users);
 
             // Act
             var token = await _loginService.LoginAsync(request);
