@@ -15,56 +15,45 @@ public partial class WalletDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Currency> Currencies { get; set; }
-
     public virtual DbSet<Transaction> Transactions { get; set; }
+
+    public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<Wallet> Wallets { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=.;Database=DigitalWallet;User Id=sa;Password=sasa@123;TrustServerCertificate=True;");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Currency>(entity =>
-        {
-            entity.ToTable("Currencies", "wallet");
-
-            entity.HasIndex(e => e.Code, "IX_Currencies_Code").IsUnique();
-
-            entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Code)
-                .HasMaxLength(10)
-                .IsUnicode(false);
-            entity.Property(e => e.Name).HasMaxLength(30);
-            entity.Property(e => e.Ratio).HasColumnType("decimal(18, 6)");
-        });
-
         modelBuilder.Entity<Transaction>(entity =>
         {
-            entity.ToTable("Transactions", "wallet");
-
-            entity.HasIndex(e => e.WalletId, "IX_Transactions_WalletId");
+            entity.HasKey(e => e.Id).HasName("PK__Transact__3214EC0709E166A8");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Amount).HasColumnType("decimal(18, 6)");
-            entity.Property(e => e.Description).HasMaxLength(500);
+            entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.TransactionType)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
 
-            entity.HasOne(d => d.Wallet).WithMany(p => p.Transactions).HasForeignKey(d => d.WalletId);
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Users__3214EC079B2CEB98");
+
+            entity.HasIndex(e => e.Username, "UQ__Users__536C85E41AB47741").IsUnique();
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.PasswordHash).HasMaxLength(256);
+            entity.Property(e => e.Username).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Wallet>(entity =>
         {
-            entity.ToTable("Wallets", "wallet");
-
-            entity.HasIndex(e => e.CurrencyId, "IX_Wallets_CurrencyId");
+            entity.HasKey(e => e.Id).HasName("PK__Wallets__3214EC07F6944F9E");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Balance).HasColumnType("decimal(18, 6)");
-            entity.Property(e => e.Title).HasMaxLength(30);
-
-            entity.HasOne(d => d.Currency).WithMany(p => p.Wallets).HasForeignKey(d => d.CurrencyId);
+            entity.Property(e => e.Balance).HasColumnType("decimal(18, 2)");
         });
 
         OnModelCreatingPartial(modelBuilder);

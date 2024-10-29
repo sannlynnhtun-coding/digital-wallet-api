@@ -3,13 +3,11 @@ using System.Collections.Generic;
 
 namespace DigitalWallet.Database.WalletDbContextModels;
 
-public partial class Wallet
+public partial class User
 {
     public Guid Id { get; set; }
 
-    public Guid UserId { get; set; }
+    public string Username { get; set; } = null!;
 
-    public decimal Balance { get; set; }
-
-    public Guid CurrencyId { get; set; }
+    public string PasswordHash { get; set; } = null!;
 }
