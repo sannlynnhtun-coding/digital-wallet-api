@@ -137,3 +137,6 @@ GO
 - **Foreign Keys**: Establishes relationships between tables for referential integrity, such as linking transactions to wallets and wallets to currencies.
 
 This setup provides a solid foundation for managing user funds and transactions in an e-commerce environment, ensuring secure and efficient handling of financial data.
+
+
+dotnet ef dbcontext scaffold "Server=.;Database=DigitalWallet;User Id=sa;Password=sasa@123;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o WalletDbContextModels -c WalletDbContext -f

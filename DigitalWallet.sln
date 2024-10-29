@@ -9,13 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{BFF6B2F1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalWallet", "src\DigitalWallet\DigitalWallet.csproj", "{22E90686-370A-4D58-AB9E-09AE0B93910C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalWallet.FunctionalTests", "tests\DigitalWallet.FunctionalTests\DigitalWallet.FunctionalTests.csproj", "{3000CCEC-4422-4E35-974C-7CDE960709E7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalWallet.IntegrationTests", "tests\DigitalWallet.IntegrationTests\DigitalWallet.IntegrationTests.csproj", "{EAD28F87-3A25-4933-8502-01001B61E5F0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalWallet.UnitTests", "tests\DigitalWallet.UnitTests\DigitalWallet.UnitTests.csproj", "{0DB13A08-98A6-4C17-AA75-A48F60DA320F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalWallet.Database", "src\DigitalWallet.Database\DigitalWallet.Database.csproj", "{6015440C-AE01-4109-81E6-A239CC39D6FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalWallet.Database", "src\DigitalWallet.Database\DigitalWallet.Database.csproj", "{6015440C-AE01-4109-81E6-A239CC39D6FB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documents", "documents", "{C49EBFBB-73DB-456E-8267-92BDB774FA53}"
 	ProjectSection(SolutionItems) = preProject
@@ -32,14 +28,6 @@ Global
 		{22E90686-370A-4D58-AB9E-09AE0B93910C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22E90686-370A-4D58-AB9E-09AE0B93910C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22E90686-370A-4D58-AB9E-09AE0B93910C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3000CCEC-4422-4E35-974C-7CDE960709E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3000CCEC-4422-4E35-974C-7CDE960709E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3000CCEC-4422-4E35-974C-7CDE960709E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3000CCEC-4422-4E35-974C-7CDE960709E7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EAD28F87-3A25-4933-8502-01001B61E5F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EAD28F87-3A25-4933-8502-01001B61E5F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EAD28F87-3A25-4933-8502-01001B61E5F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EAD28F87-3A25-4933-8502-01001B61E5F0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0DB13A08-98A6-4C17-AA75-A48F60DA320F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0DB13A08-98A6-4C17-AA75-A48F60DA320F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DB13A08-98A6-4C17-AA75-A48F60DA320F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -54,8 +42,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{22E90686-370A-4D58-AB9E-09AE0B93910C} = {059A3FB7-BD06-4EB2-83D3-CE3DCA7DCDCD}
-		{3000CCEC-4422-4E35-974C-7CDE960709E7} = {BFF6B2F1-63BA-4FD3-83B6-66C89CB26332}
-		{EAD28F87-3A25-4933-8502-01001B61E5F0} = {BFF6B2F1-63BA-4FD3-83B6-66C89CB26332}
 		{0DB13A08-98A6-4C17-AA75-A48F60DA320F} = {BFF6B2F1-63BA-4FD3-83B6-66C89CB26332}
 		{6015440C-AE01-4109-81E6-A239CC39D6FB} = {059A3FB7-BD06-4EB2-83D3-CE3DCA7DCDCD}
 	EndGlobalSection

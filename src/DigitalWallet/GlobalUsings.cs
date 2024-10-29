@@ -9,25 +9,11 @@ global using Microsoft.AspNetCore.Mvc;
 global using FluentValidation;
 
 // solution
-global using DigitalWallet.Features.MultiCurrency;
-global using DigitalWallet.Features.MultiCurrency.Common;
-global using DigitalWallet.Features.Transactions;
-global using DigitalWallet.Features.UserWallet;
-global using DigitalWallet.Common.Filters;
-global using DigitalWallet.Database.WalletDbContextModels;
-global using DigitalWallet.Features.MultiCurrency.CreateCurrency;
-global using DigitalWallet.Features.MultiCurrency.UpdateRatio;
-global using DigitalWallet.Features.UserWallet.Common;
-global using DigitalWallet.Features.UserWallet.ChangeTitle;
-global using DigitalWallet.Features.UserWallet.CreateWallet;
-global using DigitalWallet.Features.UserWallet.Suspend;
-global using DigitalWallet.Features.UserWallet.GetBalance;
-global using DigitalWallet.Features.Transactions.WalletFunds;
-global using DigitalWallet.Features.Transactions.WalletTransactions;
-global using DigitalWallet.Features.UserWallet.GetTransactions;
-global using DigitalWallet.Features.Transactions.Common;
-global using DigitalWallet.Features.MultiCurrency.GetAll;
-global using DigitalWallet.Features.UserWallet.Active;
 global using Carter;
-global using DigitalWallet.Common;
 global using ServiceCollector.Core;
+
+global using DigitalWallet.Database.WalletDbContextModels;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.OpenApi.Models;
+global using System.Security.Cryptography;
+global using System.Text;
