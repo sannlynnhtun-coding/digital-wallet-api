@@ -1,142 +1,90 @@
 # DigitalWallet
-The **DigitalWallet** is an E-Commerce User Wallet Service, offering a secure and user-friendly solution for managing funds within an online platform. It is built using ASP.NET Core with a focus on clean architecture and scalability, ensuring a robust and maintainable service.
-
-## ⭐ Give a Star!
-If you find the `DigitalWallet` project valuable and appreciate the use of **ASP.NET Core** and **Vertical Slice Architecture**, please consider showing your support by starring this repository! It helps others discover this project and recognizes the effort put into building a comprehensive wallet service.
-
-## Getting Started
-
-This repository provides all the necessary resources to set up and build your own Digital Wallet application. Follow the instructions below to get started:
-
-![DigitalWallet Diagram](https://github.com/thisisnabi/DigitalWallet/assets/3371886/6cc50499-5130-4ec6-b976-8424a4ca5e04)
-
-### Features
-- **MultiCurrency**
-  - CreateCurrency
-  - UpdateRatio
-  - GetAll
-- **UserWallet**
-  - CreateWallet
-  - GetBalance
-  - Active
-  - Suspend
-  - ChangeTitle
-  - GetTransactions
-- **Transactions**
-  - IncreaseWalletBalance
-  - DecreaseWalletBalance
-  - WalletFunds
-  - WalletTransactions
-
-These features enable users to manage their wallets and transactions seamlessly, with support for multiple currencies and various wallet statuses like active and suspended.
-
-## Database Setup
-
-To set up the database for the Digital Wallet service, use the following command to scaffold the Entity Framework Core context from your existing SQL Server database:
-
-```bash
-dotnet ef dbcontext scaffold "Server=.;Database=DigitalWallet;User Id=sa;Password=sasa@123;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o WalletDbContextModels -c WalletDbContext -f
-```
-
-### SQL Server Database Creation
-Here is the SQL script for creating the **DigitalWallet** database with the required tables and schemas:
-
 ```sql
-USE [master];
+USE [DigitalWallet]
+GO
+/****** Object:  Table [dbo].[Transactions]    Script Date: 10/29/2024 4:22:09 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Transactions](
+	[Id] [uniqueidentifier] NOT NULL,
+	[FromWalletId] [uniqueidentifier] NOT NULL,
+	[ToWalletId] [uniqueidentifier] NOT NULL,
+	[Amount] [decimal](18, 2) NOT NULL,
+	[TransactionType] [varchar](50) NULL,
+	[CreatedAt] [datetime] NOT NULL,
+ CONSTRAINT [PK__Transact__3214EC0709E166A8] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 10/29/2024 4:22:09 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Users](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Username] [nvarchar](50) NOT NULL,
+	[PasswordHash] [nvarchar](256) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Wallets]    Script Date: 10/29/2024 4:22:09 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Wallets](
+	[Id] [uniqueidentifier] NOT NULL,
+	[UserId] [uniqueidentifier] NOT NULL,
+	[Balance] [decimal](18, 2) NOT NULL,
+	[CurrencyId] [uniqueidentifier] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+INSERT [dbo].[Transactions] ([Id], [FromWalletId], [ToWalletId], [Amount], [TransactionType], [CreatedAt]) VALUES (N'284b2741-3180-40f8-938f-547dc4a4b744', N'619011ff-15ae-496a-916c-089da8a7d361', N'a3a1ee0a-946a-4a3d-9f10-134e9cae7698', CAST(20.00 AS Decimal(18, 2)), N'Debit', CAST(N'2024-10-29T06:28:21.893' AS DateTime))
+GO
+INSERT [dbo].[Transactions] ([Id], [FromWalletId], [ToWalletId], [Amount], [TransactionType], [CreatedAt]) VALUES (N'0bf934d4-58ea-41dd-971c-675e2fe2667a', N'a3a1ee0a-946a-4a3d-9f10-134e9cae7698', N'619011ff-15ae-496a-916c-089da8a7d361', CAST(20.00 AS Decimal(18, 2)), N'Credit', CAST(N'2024-10-29T06:28:21.893' AS DateTime))
+GO
+INSERT [dbo].[Users] ([Id], [Username], [PasswordHash]) VALUES (N'67926fa7-822e-4817-bcfd-339844e6f67e', N'admin', N'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=')
+GO
+INSERT [dbo].[Users] ([Id], [Username], [PasswordHash]) VALUES (N'af560817-d384-45c8-a702-861fff38056b', N'user3', N'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=')
+GO
+INSERT [dbo].[Users] ([Id], [Username], [PasswordHash]) VALUES (N'bf734c0d-7381-4303-9590-8947fcc1b743', N'user2', N'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=')
+GO
+INSERT [dbo].[Users] ([Id], [Username], [PasswordHash]) VALUES (N'90c72622-d910-49df-8698-de4f413ecab5', N'user1', N'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=')
+GO
+INSERT [dbo].[Wallets] ([Id], [UserId], [Balance], [CurrencyId]) VALUES (N'619011ff-15ae-496a-916c-089da8a7d361', N'af560817-d384-45c8-a702-861fff38056b', CAST(260.00 AS Decimal(18, 2)), N'42a10123-6612-497a-be58-fc4e3bbbc55b')
+GO
+INSERT [dbo].[Wallets] ([Id], [UserId], [Balance], [CurrencyId]) VALUES (N'a3a1ee0a-946a-4a3d-9f10-134e9cae7698', N'bf734c0d-7381-4303-9590-8947fcc1b743', CAST(240.00 AS Decimal(18, 2)), N'2f6728d1-c993-4920-8972-a0e0d240221e')
+GO
+INSERT [dbo].[Wallets] ([Id], [UserId], [Balance], [CurrencyId]) VALUES (N'4938d894-51ee-4c43-8aa3-2a94c1fe6be1', N'90c72622-d910-49df-8698-de4f413ecab5', CAST(100.00 AS Decimal(18, 2)), N'f47fc901-b30b-4ecf-a11d-bb43641c3bc9')
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [UQ__Users__536C85E41AB47741]    Script Date: 10/29/2024 4:22:09 PM ******/
+ALTER TABLE [dbo].[Users] ADD UNIQUE NONCLUSTERED 
+(
+	[Username] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Transactions] ADD  CONSTRAINT [DF__Transacti__Creat__2D27B809]  DEFAULT (getdate()) FOR [CreatedAt]
+GO
+ALTER TABLE [dbo].[Wallets] ADD  DEFAULT ((0)) FOR [Balance]
+GO
+USE [master]
+GO
+ALTER DATABASE [DigitalWallet] SET  READ_WRITE 
 GO
 
--- Create DigitalWallet Database
-CREATE DATABASE [DigitalWallet] ON PRIMARY 
-( NAME = N'DigitalWallet', FILENAME = N'/var/opt/mssql/data/DigitalWallet.mdf', SIZE = 8192KB, MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
-LOG ON 
-( NAME = N'DigitalWallet_log', FILENAME = N'/var/opt/mssql/data/DigitalWallet_log.ldf', SIZE = 8192KB, MAXSIZE = 2048GB, FILEGROWTH = 65536KB );
-GO
-
--- Enable Full-Text Search if available
-IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-BEGIN
-    EXEC [DigitalWallet].[dbo].[sp_fulltext_database] @action = 'enable';
-END;
-GO
-
--- Database settings for optimal performance
-ALTER DATABASE [DigitalWallet] SET ANSI_NULL_DEFAULT OFF;
-ALTER DATABASE [DigitalWallet] SET ANSI_NULLS OFF;
-ALTER DATABASE [DigitalWallet] SET AUTO_UPDATE_STATISTICS ON;
-ALTER DATABASE [DigitalWallet] SET READ_COMMITTED_SNAPSHOT ON;
-GO
-
--- Create wallet schema and tables
-USE [DigitalWallet];
-GO
-
-CREATE SCHEMA [wallet];
-GO
-
--- Currencies Table
-CREATE TABLE [wallet].[Currencies](
-    [Id] [uniqueidentifier] NOT NULL,
-      NOT NULL,
-      NOT NULL,
-    [Ratio] [decimal](18, 6) NOT NULL,
-      NOT NULL,
-    CONSTRAINT [PK_Currencies] PRIMARY KEY CLUSTERED ([Id] ASC)
-);
-GO
-
--- Wallets Table
-CREATE TABLE [wallet].[Wallets](
-    [Id] [uniqueidentifier] NOT NULL,
-    [UserId] [uniqueidentifier] NOT NULL,
-      NULL,
-    [Balance] [decimal](18, 6) NOT NULL,
-      NOT NULL,
-    [CurrencyId] [uniqueidentifier] NOT NULL,
-    [Status] [int] NOT NULL,
-    CONSTRAINT [PK_Wallets] PRIMARY KEY CLUSTERED ([Id] ASC)
-);
-GO
-
--- Transactions Table
-CREATE TABLE [wallet].[Transactions](
-    [Id] [uniqueidentifier] NOT NULL,
-    [WalletId] [uniqueidentifier] NOT NULL,
-      NOT NULL,
-    [Amount] [decimal](18, 6) NOT NULL,
-      NOT NULL,
-    [Kind] [int] NOT NULL,
-    [Type] [int] NOT NULL,
-    CONSTRAINT [PK_Transactions] PRIMARY KEY CLUSTERED ([Id] ASC)
-);
-GO
-
--- Indexes for fast lookups
-CREATE UNIQUE NONCLUSTERED INDEX [IX_Currencies_Code] ON [wallet].[Currencies]([Code] ASC);
-CREATE NONCLUSTERED INDEX [IX_Transactions_WalletId] ON [wallet].[Transactions]([WalletId] ASC);
-CREATE NONCLUSTERED INDEX [IX_Wallets_CurrencyId] ON [wallet].[Wallets]([CurrencyId] ASC);
-
--- Foreign Key Constraints
-ALTER TABLE [wallet].[Transactions] ADD CONSTRAINT [FK_Transactions_Wallets_WalletId] FOREIGN KEY([WalletId])
-REFERENCES [wallet].[Wallets]([Id]) ON DELETE CASCADE;
-ALTER TABLE [wallet].[Wallets] ADD CONSTRAINT [FK_Wallets_Currencies_CurrencyId] FOREIGN KEY([CurrencyId])
-REFERENCES [wallet].[Currencies]([Id]) ON DELETE CASCADE;
-GO
-
--- Set the database to read-write mode
-USE [master];
-GO
-ALTER DATABASE [DigitalWallet] SET READ_WRITE;
-GO
 ```
-
-### Explanation:
-- **Database Creation**: Sets up the `DigitalWallet` database, along with schemas and tables to store currencies, wallets, and transactions.
-- **Schema Management**: Uses the `wallet` schema to organize tables and ensure proper structure.
-- **Tables**: Defines `Currencies` for storing exchange rates, `Wallets` for user accounts, and `Transactions` for recording all wallet activities.
-- **Indexes**: Adds indexes on common lookup fields (`Code`, `WalletId`, `CurrencyId`) to improve query performance.
-- **Foreign Keys**: Establishes relationships between tables for referential integrity, such as linking transactions to wallets and wallets to currencies.
-
-This setup provides a solid foundation for managing user funds and transactions in an e-commerce environment, ensuring secure and efficient handling of financial data.
-
-
 dotnet ef dbcontext scaffold "Server=.;Database=DigitalWallet;User Id=sa;Password=sasa@123;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o WalletDbContextModels -c WalletDbContext -f
