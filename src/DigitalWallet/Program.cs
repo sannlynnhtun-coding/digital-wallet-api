@@ -78,7 +78,7 @@ app.MapGet("/wallets/{id}", async (Guid id, WalletService walletService, HttpCon
         return Results.Unauthorized();
 
     var userId = auth.GetUserIdFromContext(context);
-    var wallet = await walletService.GetWalletAsync(id, userId.Value);
+    var wallet = await walletService.GetWalletAsync(id, userId!.Value);
     return wallet is not null ? Results.Ok(wallet) : Results.NotFound();
 });
 
@@ -91,7 +91,7 @@ app.MapPost("/transactions", async (Transaction transaction, WalletService walle
     var userId = auth.GetUserIdFromContext(context);
     try
     {
-        var transactions = await walletService.ProcessTransactionAsync(transaction, userId.Value);
+        var transactions = await walletService.ProcessTransactionAsync(transaction, userId!.Value);
         return Results.Created($"/transactions/{transactions[0].Id}", transactions);
     }
     catch (ArgumentException ex)
@@ -135,27 +135,4 @@ app.MapGet("/wallets/{walletId}/transactions", async (Guid walletId, int page, W
     return Results.Ok(transactions);
 });
 
-// Token Generation Method
-string GenerateToken(Guid userId)
-{
-    var token = $"{userId}.{Guid.NewGuid()}.{DateTime.UtcNow.AddHours(1)}";
-    return Convert.ToBase64String(Encoding.UTF8.GetBytes(token));
-}
-
-// Password Verification Method
-bool VerifyPassword(string password, string storedHash)
-{
-    // Hash the provided password
-    using (var sha256 = SHA256.Create())
-    {
-        var passwordBytes = Encoding.UTF8.GetBytes(password);
-        var hashBytes = sha256.ComputeHash(passwordBytes);
-        var hashString = Convert.ToBase64String(hashBytes);
-
-        // Compare the hashed password with the stored hash
-        return hashString == storedHash;
-    }
-}
-
-// Run the application
 app.Run();

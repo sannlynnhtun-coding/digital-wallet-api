@@ -67,7 +67,7 @@ namespace DigitalWallet.UnitTests
             var walletId = Guid.NewGuid();
             var wallets = new List<Wallet>();
             _dbContextMock.Setup(db => db.Wallets).ReturnsDbSet(wallets);
-            _dbContextMock.Setup(db => db.Wallets.FindAsync(walletId)).ReturnsAsync((Wallet)null);
+            _dbContextMock.Setup(db => db.Wallets.FindAsync(walletId)).ReturnsAsync(default(Wallet));
 
             // Act
             var result = await _walletService.GetWalletAsync(walletId, Guid.NewGuid());
@@ -122,7 +122,7 @@ namespace DigitalWallet.UnitTests
 
         public IQueryable<TElement> CreateQuery<TElement>(Expression expression) => new TestAsyncEnumerable<TElement>(expression);
 
-        public object Execute(Expression expression) => _inner.Execute(expression);
+        public object Execute(Expression expression) => _inner.Execute(expression)!;
 
         public TResult Execute<TResult>(Expression expression) => _inner.Execute<TResult>(expression);
 
