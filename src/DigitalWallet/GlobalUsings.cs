@@ -9,7 +9,6 @@ global using Microsoft.AspNetCore.Mvc;
 global using FluentValidation;
 
 // solution
-global using Carter;
 global using ServiceCollector.Core;
 
 global using DigitalWallet.Database.WalletDbContextModels;
