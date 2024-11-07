@@ -41,8 +41,8 @@
             TransactionType = "Credit"
         };
 
-        _dbContext.Transactions.Add(debitTransaction);
-        _dbContext.Transactions.Add(creditTransaction);
+        await _dbContext.Transactions.AddAsync(debitTransaction);
+        await _dbContext.Transactions.AddAsync(creditTransaction);
         await _dbContext.SaveChangesAsync();
 
         return new List<Transaction> { debitTransaction, creditTransaction };
