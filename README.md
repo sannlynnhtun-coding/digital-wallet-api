@@ -1,7 +1,3 @@
-Here’s your updated documentation for the DigitalWallet API, including the SQL script and scaffold command:
-
----
-
 # 🌐 DigitalWallet 💳
 
 DigitalWallet is a comprehensive API for managing digital wallets, handling user authentication, and processing financial transactions. This API is built with ASP.NET Core and Entity Framework Core, using SQL Server as the database. It also includes integrated Swagger documentation for easy testing and exploration. 📚✨
